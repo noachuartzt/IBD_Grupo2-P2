@@ -53,3 +53,10 @@ cd IBD_Grupo2-P2
 Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creación de la imagen a través del terminal.
 
 ### 2. 
+
+
+Cosas que he probado 
+* git clone https://github.com/kermitt2/grobid.git 
+* docker pull grobid/grobid:0.7.2 
+* docker run -p 8070:8070 grobid/grobid:0.7.2 
+* grobid_functions.ipynb
