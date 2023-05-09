@@ -33,6 +33,7 @@ MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
 
 // Consulta
 MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: 'Y. Filali'})
-RETURN p.title, p.year
-ORDER BY (p.year) ASC
+MATCH (p)-[r:PUBLISHED_IN]->(y:Year)
+RETURN p, r, y, a
+ORDER BY (y) ASC
 ````
