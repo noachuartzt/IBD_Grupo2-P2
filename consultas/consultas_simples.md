@@ -17,7 +17,9 @@ SET p.abstract = row.abstract
 MERGE (y:Year {year: row.year})
 
 // Crear relación PUBLISHED_IN
-MERGE (p)-[c:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
+// MERGE (p)-[c:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
+MERGE (p)-[c:PUBLISHED_IN]->(y)
+SET c.publicationDate = CASE WHEN row.publicationDate IS NOT NULL THEN row.publicationDate ELSE "Unknown" END
 
 // Crear nodo Author
 WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names, p
