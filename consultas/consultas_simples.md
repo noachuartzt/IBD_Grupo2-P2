@@ -20,14 +20,13 @@ MERGE (y:Year {year: row.year})
 MERGE (p)-[:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
 
 // Crear nodo Author
-WITH row.authors AS json_authors
-WITH apoc.json.parse(json_authors) AS authors
-UNWIND authors AS a
-
-MERGE (a:Author {name: trim(author.name)})
+WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names
+UNWIND range(0, size(ids)-1) AS i
+MERGE (a:Author {id: ids[i]})
+SET a.name = names[i]
 
 // Crear relación WRITTEN_BY
-MERGE (p)-[:WRITTEN_BY {name: trim(author)}]->(a)
+MERGE (p)-[:WRITTEN_BY]->(a)
 
 // Consulta
 MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: '<author_name>'})
