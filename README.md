@@ -7,41 +7,19 @@ Este repositorio contiene los archivos necesarios para crear una infraestructura
 Todos los archivos han sido creados y modificados por los miembros del **Grupo 2** de la asignatura de IBD de ***Ciencia de Datos e Inteligencia Artificial de la Universidad Politécnica de Madrid*** (*UPM*): Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño.
 ****
 
-## Evaluación
-1. Uso de las siguientes publicaciones durante el desarrollo de la práctica.
-- Artículos aceptados en la conferencia SEPLN 2022: http://journal.sepln.org/sepln/ojs/ojs/index.php/pln/issue/view/286
-- Se recomienda el uso de ‘Grobid’ para parsear los documentos.
-
-2. Generación de los siguientes datos estáticos:
-- Documents.csv: contiene meta-información de las publicaciones
-    - Columnas: ‘file_name’, ‘title’, ‘num_pages’, ‘creation_date’, ‘modification_date’
-
-- Authors.csv: contiene el número de publicaciones por autor
-    - Columnas: ‘author’ y ‘publications’
-
-3. Generación de los siguientes datos dinámicos:
-- Keywords.csv: contiene el número de apariciones de un término concreto (e.g. ‘virus’), o cualquiera de sus sinónimos en inglés (e.g. ‘infection’,
-‘microbe’..), en el corpus
-    - Columnas: ‘word’ y ‘frequency’
-
-4. Soporte para las siguientes consultas simples:
-- Articles: listado ordenado de artículos en los que un autor específico ha participado.
-    - La relevancia viene determinada por el número de autores (menor número de autores, mayor relevancia del autor concreto)
-- Texts: listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico.
-    - La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término.
-
-5. Soporte para las siguientes consultas complejas:
-- Collaborators: listado ordenado de autores relacionados con un autor específico.
-    - La relación entre autores viene determinada por su colaboración directa en un artículo o indirecta a través de autores comunes
-- Words: número de palabras en el corpus cuya longitud es de un tamaño específico.
-    - Palabras con sólo una letra, o con dos letras, o con tres letras…hasta 20 letras.
-
 ## Requisitos
 
 Para la realización de la práctica serán necesarios los siguientes servicios:
 
 - Tener instalado **GIT** en su máquina. Si no, puedes descargarlo desde [aquí](https://git-scm.com/downloads).
 - Tener instalado **Docker** en su máquina. Si no, puedes descargarlo desde [aquí](https://www.docker.com/products/docker-desktop/).
+
+***
+## Dudas para el Profesor
+
+1. Archivo `corpus.txt` y lista de DOIs con respecto a los doccumentos proporcionados
+
+***
 
 ## Pasos
 
