@@ -61,6 +61,10 @@ def json_to_csv(filename):
     author_ids = [author['authorId'] for author in data['authors']]
     author_names = [author['name'] for author in data['authors']]
 
+    # Convertir las listas a strings
+    author_ids = ','.join(author_ids)
+    author_names = ','.join(author_names)
+
     # Eliminar las filas con datos duplicados
     data = data.iloc[0]
 
