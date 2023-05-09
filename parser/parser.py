@@ -54,39 +54,30 @@ def json_to_csv(filename):
     :param filename: Nombre del archivo JSON en string sin el .json
     """
     
-    # Ruta al directorio que contiene los documentos JSON
-    # Para el test
-    json_dir = './json/'
-    
-    # Para la presentación
-    #json_dir = './documents/demo/' 
-    filepath = os.path.join(json_dir, filename + '.json')
+    # Cargar los datos JSON desde un archivo
+    data = pd.read_json(f'./json/{filename}.json')
 
-    # Encabezados de las columnas del archivo CSV
-    headers = ['paperId', 'title', 'abstract', 'year', 'publicationDate', 'authors']
+    # Conversión de sub-objectos a listas 
+    author_ids = [author['authorId'] for author in data['authors']]
+    author_names = [author['name'] for author in data['authors']]
+
+    # Eliminar las filas con datos duplicados
+    data = data.iloc[0]
+
+    # Crear un DataFrame con los datos seleccionados
+    df = pd.DataFrame({
+        'paperId': data['paperId'],
+        'title': data['title'],
+        'abstract': data['abstract'],
+        'year': data['year'],
+        'publicationDate': data['publicationDate'],
+        'authorId': [author_ids],
+        'authorName': [author_names]
+        })
 
     # Si carpeta /csv no existe, la crea
     if not os.path.exists('./csv'):
         os.makedirs('./csv')
 
-    csv_file = './csv/'+ str(filename) + '.csv'
-
-    # Abrir el archivo CSV en modo de escritura y crear un objeto writer para escribir en el archivo
-    with open(csv_file, 'w', encoding='utf-8', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
-     
-        # Abrir el archivo JSON
-        with open(filepath, 'r', encoding='utf-8') as json_file:
-            data = json.load(json_file)
-            
-            # Obtener los valores de las claves del JSON
-            paperId = data['paperId']
-            title = data['title']
-            abstract = data['abstract']
-            year = data['year']
-            publicationDate = data['publicationDate']
-            authors = data['authors']
-            
-            # Escribir la información en el archivo CSV
-            writer.writerow([paperId, title, abstract, year, publicationDate, authors])
+    # Guardar el DataFrame en un archivo CSV
+    df.to_csv(f'./csv/{filename}.csv', index=False)
