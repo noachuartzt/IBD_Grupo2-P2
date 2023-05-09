@@ -17,20 +17,22 @@ SET p.abstract = row.abstract
 MERGE (y:Year {year: row.year})
 
 // Crear relación PUBLISHED_IN
-MERGE (p)-[:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
+MERGE (p)-[c:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
 
 // Crear nodo Author
-WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names
+WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names, p
 UNWIND range(0, size(ids)-1) AS i
+
 MERGE (a:Author {id: ids[i]})
 SET a.name = names[i]
 
 // Crear relación WRITTEN_BY
-MERGE (p)-[:WRITTEN_BY]->(a)
+MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
 
 // Consulta
-MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: '<author_name>'})
-RETURN p.title, ORDER BY (p.year) ASC
+MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: 'Y. Filali'})
+RETURN p.title, p.year
+ORDER BY (p.year) ASC
 ````
 
 ````
