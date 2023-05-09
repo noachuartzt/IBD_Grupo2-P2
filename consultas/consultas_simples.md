@@ -36,5 +36,3 @@ MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: 'Y. Filali'})
 RETURN p.title, p.year
 ORDER BY (p.year) ASC
 ````
-
-````
