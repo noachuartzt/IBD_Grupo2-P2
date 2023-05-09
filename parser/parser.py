@@ -47,41 +47,48 @@ def doi_to_json():
 
 
     
-def json_to_csv(filename):
+def json_to_csv():
     """
     Convierte archivos JSON a CSV.
     
     :param filename: Nombre del archivo JSON en string sin el .json
     """
+
+    # Ruta del directorio
+    directory = './json'
     
-    # Cargar los datos JSON desde un archivo
-    data = pd.read_json(f'./json/{filename}.json')
+    # Lista de archivos en el directorio
+    files = os.listdir(directory)
+    print(files)
 
-    # Conversión de sub-objectos a listas 
-    author_ids = [author['authorId'] for author in data['authors']]
-    author_names = [author['name'] for author in data['authors']]
+    # Creamos un DataFrame vacío
+    df = pd.DataFrame(columns=['paperId', 'title', 'abstract', 'year', 'publicationDate',   'authorId', 'authorName'])
 
-    # Convertir las listas a strings
-    author_ids = ','.join(author_ids)
-    author_names = ','.join(author_names)
+    for f in files:
 
-    # Eliminar las filas con datos duplicados
-    data = data.iloc[0]
+        # Nombre del archivo sin la extensión
+        filename = f.split('.')[0]
 
-    # Crear un DataFrame con los datos seleccionados
-    df = pd.DataFrame({
-        'paperId': data['paperId'],
-        'title': data['title'],
-        'abstract': data['abstract'],
-        'year': data['year'],
-        'publicationDate': data['publicationDate'],
-        'authorId': [author_ids],
-        'authorName': [author_names]
-        })
+        # Cargar los datos JSON desde un archivo
+        data = pd.read_json(f'./json/{filename}.json')
+
+        # Conversión de sub-objectos a listas 
+        author_ids = [author['authorId'] for author in data['authors']]
+        author_names = [author['name'] for author in data['authors']]
+
+        # Convertir las listas a strings
+        author_ids = ','.join(author_ids)
+        author_names = ','.join(author_names)
+
+        # Eliminar las filas con datos duplicados
+        data = data.iloc[0]
+
+        # Añadir los datos al DataFrame en la última fila
+        df.loc[len(df)] = [data['paperId'], data['title'], data['abstract'], data['year'], data['publicationDate'], author_ids, author_names]
 
     # Si carpeta /csv no existe, la crea
     if not os.path.exists('./csv'):
         os.makedirs('./csv')
 
     # Guardar el DataFrame en un archivo CSV
-    df.to_csv(f'./csv/{filename}.csv', index=False)
+    df.to_csv(f'./csv/output.csv', index=False)

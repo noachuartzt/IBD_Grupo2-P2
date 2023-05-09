@@ -6,7 +6,7 @@
 
 ````sql
 // Cargamos los datos del CSV
-LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/parser/csv/2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/parser/csv/output.csv' AS row
 
 // Crear nodo Paper
 MERGE (p:Paper {id: row.paperId})
