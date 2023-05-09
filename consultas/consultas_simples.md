@@ -5,28 +5,33 @@
 **Neo4j**
 
 ````sql
--- Cargamos los datos del CSV
-LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/blob/main/parser/csv/2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.csv' AS row
+// Cargamos los datos del CSV
+LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/parser/csv/2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.csv' AS row
 
--- Creamos los nodos necesarios
-MATCH (authors:User {id:row.authors}) 
-MATCH (paper:User {id:row.paperId})
-MATCH (year:User {id:row.year})
+// Crear nodo Paper
+MERGE (p:Paper {id: row.paperId})
+SET p.title = row.title
+SET p.abstract = row.abstract
 
--- Definimos las propiedades
-SET paper.title = row.title
-SET paper.abstract = row.abstract
+// Crear nodo Year
+MERGE (y:Year {year: row.year})
 
--- Creamos las relaciones
-MERGE (paper)-[:PUBLISHED_IN {publicationDate: row.publicationDate}]->(year)
+// Crear relación PUBLISHED_IN
+MERGE (p)-[:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
 
-UNWIND split(row.authors, ';') AS author                -- Separamos los autores
-MERGE (paper)-[:WRITTEN_BY {name: trim(author)}]->(author)
+// Crear nodo Author
+WITH row.authors AS json_authors
+WITH apoc.json.parse(json_authors) AS authors
+UNWIND authors AS a
 
+MERGE (a:Author {name: trim(author.name)})
 
--- Consulta
-MATCH (p:User)-[:WRITTEN_BY]->(a:User {name:'<author_name>'})
-RETURN p.title AS title, p.year AS year
-ORDER BY p.year ASC
+// Crear relación WRITTEN_BY
+MERGE (p)-[:WRITTEN_BY {name: trim(author)}]->(a)
+
+// Consulta
+MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: '<author_name>'})
+RETURN p.title, ORDER BY (p.year) ASC
+````
 
 ````
