@@ -1,6 +1,7 @@
 ## CONSULTAS SIMPLES
 
 1. ***Articles***: listado ordenado de artículos en los que un autor específico ha participado.
+- La relevancia viene determinada por el número de autores (menor número de autores, mayor relevancia del autor concreto)
 
 **Neo4j**
 
@@ -32,8 +33,12 @@ SET a.name = names[i]
 MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
 
 // Consulta
-MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author {name: 'Y. Filali'})
+MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'})
 MATCH (p)-[r:PUBLISHED_IN]->(y:Year)
-RETURN p, r, y, a
-ORDER BY (y) ASC
+
+MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author)
+WITH p, count(a) AS numAuthors
+
+RETURN p.title, numAuthors
+ORDER BY numAuthors DESC
 ````
