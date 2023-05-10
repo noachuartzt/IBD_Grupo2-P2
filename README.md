@@ -59,12 +59,99 @@ cd IBD_Grupo2-P2
 
 Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creación de la imagen a través del terminal.
 
-### 2. Cosas
+### 2. Configuraciñon de Elastic Search
 
+*2.1* La imagen y sus respectivos contenedores ya se han creado con el docker compose inicial en el **Paso 1**
+
+    ```
+    version: '3'
+
+    services:
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.9
+        container_name: elasticsearch
+        environment:
+        - discovery.type=single-node
+        volumes:
+        - ./data/:/usr/share/elasticsearch/data
+        ports:
+        - 9200:9200
+        networks:
+        - bdi_net
+
+    logstash:
+        image: docker.elastic.co/logstash/logstash:7.17.9
+        container_name: logstash
+        command: logstash -f /etc/logstash/conf.d/logstash.conf --config.reload.automatic
+        environment:
+        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        volumes:
+        - ./data/:/usr/share/logstash/data/
+        - ./logstash/conf.d/:/etc/logstash/conf.d/
+        depends_on:
+        - elasticsearch
+        networks:
+        - bdi_net
+
+    networks:
+    bdi_net:
+        driver: bridge
+    ```
+
+*2.2* Editar el logstash.conf con los campos de los jsons
+
+*2.3* La consulta para buscar los documentos que contienen una palabra clave en un campo específico es la siguiente:
+
+    * Para buscar en todos los campos: 
+
+        ``` 
+        curl -X GET "localhost:9200/_search?q=<keyword>&pretty&df=<field>"
+        ```
+
+    * Para buscar en un campo específico: 
+
+        ```
+        GET <nombre_del_indice>/_search
+        {
+        "query": {
+            "match": {
+            "texts": "<término_específico>"
+            }
+        },
+        "sort": [
+            {
+            "title.keyword": "asc"
+            }
+        ],
+        "aggs": {
+            "by_title": {
+            "terms": {
+                "field": "title.keyword"
+            },
+            "aggs": {
+                "matching_paragraphs": {
+                "top_hits": {
+                    "sort": [
+                    {
+                        "_score": "desc"
+                    }
+                    ],
+                    "size": 10,
+                    "_source": {
+                    "includes": [ "title", "paragraph" ]
+                    }
+                }
+                }
+            }
+            }
+        }
+        }
+        ```
 
 ### 3. Configuración de HDFS
 
-*3.1* La imagen y sus respectivos contenedores ya se ha creado con el docker compose inicial en el **Paso 1**
+*3.1* La imagen y sus respectivos contenedores ya se han creado con el docker compose inicial en el **Paso 1**
 
 *3.3* Creamso el directorio src en /hadoop-deployment/yarn/jobs/
 
