@@ -59,11 +59,64 @@ cd IBD_Grupo2-P2
 
 Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creación de la imagen a través del terminal.
 
-### 2. 
+### 2. Cosas
 
 
-Cosas que he probado 
-* git clone https://github.com/kermitt2/grobid.git 
-* docker pull grobid/grobid:0.7.2 
-* docker run -p 8070:8070 grobid/grobid:0.7.2 
-* grobid_functions.ipynb
+### 3. Configuración de HDFS
+
+*3.1* La imagen y sus respectivos contenedores ya se ha creado con el docker compose inicial en el **Paso 1**
+
+*3.3* Creamso el directorio src en /hadoop-deployment/yarn/jobs/
+
+    ```
+    mkdir src
+    ```
+
+*3.3* Añadimos el fichero wordsFile.txt, que contendrá las keywords que queremos contar, a /hadoop-deployment/yarn/jobs/src
+
+*3.4* Compilamos el SpecialWordCount.java
+
+    * Ejecutamos el nodo: 
+    
+        ```
+        docker exec -t namenode /bin/bash
+        ```
+
+    * Compilamos el WordCOunt: 
+        
+        ```
+        hadoop com.sun.tools.javac.Main SpecialWordCount.java
+        ```
+
+    * Para comprobar que todo ha salido correctamente: 
+    
+        ```
+        ls -la
+        ```
+
+    * Construir lalibrería jar: 
+    
+        ```
+        jar cf wc.jar SpecialWordCount*.class
+        ```
+
+    * Copiamos los ficheros de locala hdfs
+
+        ```
+        hdfs dfs -mkdir /keywords
+
+        Hadoop fs -copyFromLocal wordsFile.txt /keywords/
+        ```
+
+    * Ejecutar la applicación mapReduce con el SpecialWordCount sobre wordsFile.txt: 
+        
+        ```
+        hadoop jar wc.jar WordCount /keywords/wordsFile.txt /keywords/output
+        ```
+
+    * Vemos el resultado
+    
+        ```
+        hadoop fs -cat /keywords/output/part-r-00000
+        ```
+
