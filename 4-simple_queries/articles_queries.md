@@ -3,9 +3,6 @@
 1. ***Articles***: listado ordenado de artículos en los que un autor específico ha participado.
 - La relevancia viene determinada por el número de autores (menor número de autores, mayor relevancia del autor concreto)
 
-2. ***Collaborators***: listado ordenado de autores relacionados con un autor específico.
-- La relación entre autores viene determinada por su colaboración directa en un artículo o indirecta a través de autores comunes
-
 **Neo4j**
 
 ````sql
