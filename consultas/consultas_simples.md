@@ -3,42 +3,33 @@
 1. ***Articles***: listado ordenado de artículos en los que un autor específico ha participado.
 - La relevancia viene determinada por el número de autores (menor número de autores, mayor relevancia del autor concreto)
 
+2. ***Collaborators***: listado ordenado de autores relacionados con un autor específico.
+- La relación entre autores viene determinada por su colaboración directa en un artículo o indirecta a través de autores comunes
+
 **Neo4j**
 
 ````sql
 // Cargamos los datos del CSV
 LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/parser/csv/output.csv' AS row
 
-// Crear nodo Paper
-MERGE (p:Paper {id: row.paperId})
-SET p.title = row.title
-SET p.abstract = row.abstract
+// Crear nodo Paper y Authors
+CREATE (:Paper {id: row.id, title: row.title}) WITH row, split(row.authors, ";") AS authors
+UNWIND authors AS author_name
 
-// Crear nodo Year
-MERGE (y:Year {year: row.year})
+MERGE (a:Author {name: author_name})
+CREATE (a)<-[:WRITTEN_BY]-(:Paper {id: row.id}) nDate IS NOT NULL THEN row.publicationDate ELSE "Unknown" END
 
-// Crear relación PUBLISHED_IN
-// MERGE (p)-[c:PUBLISHED_IN {publicationDate: row.publicationDate}]->(y)
-MERGE (p)-[c:PUBLISHED_IN]->(y)
-SET c.publicationDate = CASE WHEN row.publicationDate IS NOT NULL THEN row.publicationDate ELSE "Unknown" END
-
-// Crear nodo Author
-WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names, p
-UNWIND range(0, size(ids)-1) AS i
-
-MERGE (a:Author {id: ids[i]})
-SET a.name = names[i]
-
-// Crear relación WRITTEN_BY
-MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
-
-// Consulta
-MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'})
-MATCH (p)-[r:PUBLISHED_IN]->(y:Year)
-
-MATCH (p:Paper)-[:WRITTEN_BY]->(a:Author)
-WITH p, count(a) AS numAuthors
-
-RETURN p.title, numAuthors
+// Consulta 1
+MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'}) WITH p
+MATCH (p)-[:WRITTEN_BY]->(a:Author)
+WITH p, count(a) AS numAuthors, a
 ORDER BY numAuthors DESC
+RETURN p.title, a.name
+
+// Consulta 2
+MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author)
+WHERE a <> b
+WITH b, COUNT(p) AS collaborations
+ORDER BY collaborations DESC
+RETURN b.name, collaborations
 ````
