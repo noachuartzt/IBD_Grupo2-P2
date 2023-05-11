@@ -13,7 +13,7 @@ def doi_to_json():
     """Convierte los DOIs de un archivo de texto a JSON y los guarda en una carpeta llamada /json"""
 
     # Lee el archivo corpus.txt como una serie
-    df_dois = pd.read_csv("corpus.txt", header=None, names=["DOIs"])
+    df_dois = pd.read_csv("./corpus.txt", header=None, names=["DOIs"])
 
     # Transforma la serie en una lista de DOIs
     dois = df_dois["DOIs"].tolist()
@@ -86,9 +86,9 @@ def json_to_csv():
         # Añadir los datos al DataFrame en la última fila
         df.loc[len(df)] = [data['paperId'], data['title'], data['abstract'], data['year'], data['publicationDate'], author_ids, author_names]
 
-    # Si carpeta /csv no existe, la crea
-    if not os.path.exists('./csv'):
-        os.makedirs('./csv')
+    # # Si carpeta /csv no existe, la crea
+    # if not os.path.exists('./csv'):
+    #     os.makedirs('./csv')
 
     # Guardar el DataFrame en un archivo CSV
-    df.to_csv(f'./csv/output.csv', index=False)
+    df.to_csv(f'IBD_Grupo2-P2/2-static_data/output.csv', index=False)
