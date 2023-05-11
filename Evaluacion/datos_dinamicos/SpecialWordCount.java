@@ -7,7 +7,7 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
 
 Configuration conf = new Configuration();
-conf.set("wordsFile", "/path/to/words/file");
+conf.set("wordsFile", "./Evaluacion/datos_dinamicos/");
 Job job = Job.getInstance(conf, "word count");
 
 

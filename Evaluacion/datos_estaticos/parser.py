@@ -62,7 +62,7 @@ def json_to_csv():
     print(files)
 
     # Creamos un DataFrame vacío
-    df = pd.DataFrame(columns=['paperId', 'title', 'abstract', 'year', 'publicationDate',   'authorId', 'authorName'])
+    df = pd.DataFrame(columns=['paperId', 'title', 'abstract', 'year', 'publicationDate', 'authorId', 'authorName'])
 
     for f in files:
 
