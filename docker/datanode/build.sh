@@ -1,0 +1,1 @@
+docker build -t bigdatainf/hadoop-datanode:3.3.5 .
