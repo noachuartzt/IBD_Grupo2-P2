@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 
 services:
 
@@ -25,8 +25,8 @@ services:
           - NEO4J_dbms_routing_listen__address=0.0.0.0:7688
       ports:
           - 7474:7474
-          - 7473:7473
-          - 7687:7687
+          # - 7473:7473
+          # - 7687:7687
 
 # ----------------------------------------------------------------------------------------------
 
@@ -42,9 +42,7 @@ services:
     networks:
       - bdi_net
 
-networks:
-  bdi_net:
-    driver: bridge
+
 
 # ----------------------------------------------------------------------------------------------
   namenode:
@@ -105,3 +103,7 @@ volumes:
   hadoop_namenode:
   hadoop_datanode:
   hadoop_historyserver:
+
+networks:
+  bdi_net:
+    driver: bridge
