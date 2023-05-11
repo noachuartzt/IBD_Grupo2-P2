@@ -17,7 +17,7 @@ public class WordLengthCount {
 
         private Set<Integer> lengthsToCount = new HashSet<>();
 
-        // Método setup que se ejecuta una sola vez antes de la ejecución del mapa y se utiliza para leer el archivo de entrada que contiene las longitudes de las palabras a contar.
+        // Setup (se ejecuta una sola vez antes de la ejecución del maper) el cual se utiliza para leer el archivo de entrada que contiene las longitudes de las palabras a contar.
         public void setup(Context context) throws IOException {
             Configuration conf = context.getConfiguration();
             FileSystem fs = FileSystem.get(conf);
@@ -43,7 +43,7 @@ public class WordLengthCount {
         }
     }
 
-    // Reductor que toma como entrada una clave y un conjunto de valores de longitud de palabra y 1 y emite como salida una clave y un valor de longitud de palabra y el número total de palabras con esa longitud.
+    // Reductor el cual toma como entrada una clave y un conjunto de valores de longitud de palabra y 1 y emite como salida una clave y un valor de longitud de palabra y el número total de palabras con esa longitud.
     public static class IntSumReducer extends Reducer<IntWritable,IntWritable,IntWritable,IntWritable> {
         private IntWritable result = new IntWritable();
 
