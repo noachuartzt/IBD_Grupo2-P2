@@ -60,7 +60,7 @@ public class WordLengthCount {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        conf.set("lengthsFile", "./LengthFile.txt");
+        conf.set("lengthsFile", "./lengthFile.txt");
         Job job = Job.getInstance(conf, "word length count");
         job.setJarByClass(WordLengthCount.class);
         job.setMapperClass(TokenizerMapper.class);
