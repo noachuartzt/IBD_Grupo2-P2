@@ -13,7 +13,7 @@ def doi_to_json():
     """Convierte los DOIs de un archivo de texto a JSON y los guarda en una carpeta llamada /json"""
 
     # Lee el archivo corpus.txt como una serie
-    df_dois = pd.read_csv("./corpus.txt", header=None, names=["DOIs"])
+    df_dois = pd.read_csv("corpus.txt", header=None, names=["DOIs"])
 
     # Transforma la serie en una lista de DOIs
     dois = df_dois["DOIs"].tolist()
@@ -56,18 +56,21 @@ def json_to_csv():
 
     # Ruta del directorio
     directory = './json'
-    
+
     # Lista de archivos en el directorio
     files = os.listdir(directory)
     print(files)
 
     # Creamos un DataFrame vacío
-    df = pd.DataFrame(columns=['paperId', 'title', 'abstract', 'year', 'publicationDate', 'authorId', 'authorName'])
+    documents = pd.DataFrame(columns=['file_name', 'title', 'publication_date'])
 
+
+    authors_list = []       # Lista de listas de autores
+
+    # Iteramos sobre los archivos
     for f in files:
-
-        # Nombre del archivo sin la extensión
-        filename = f.split('.')[0]
+        
+        filename = f.split('.')[0]      # Nombre del archivo sin la extensión
 
         # Cargar los datos JSON desde un archivo
         data = pd.read_json(f'./json/{filename}.json')
@@ -75,6 +78,9 @@ def json_to_csv():
         # Conversión de sub-objectos a listas 
         author_ids = [author['authorId'] for author in data['authors']]
         author_names = [author['name'] for author in data['authors']]
+
+        # Añadir lista de autores a la lista de autores
+        authors_list.append(author_names)
 
         # Convertir las listas a strings
         author_ids = ','.join(author_ids)
@@ -84,11 +90,17 @@ def json_to_csv():
         data = data.iloc[0]
 
         # Añadir los datos al DataFrame en la última fila
-        df.loc[len(df)] = [data['paperId'], data['title'], data['abstract'], data['year'], data['publicationDate'], author_ids, author_names]
+        documents.loc[len(documents)] = [data['paperId'], data['title'], data['publicationDate']]
 
-    # # Si carpeta /csv no existe, la crea
-    # if not os.path.exists('./csv'):
-    #     os.makedirs('./csv')
+    # Convertir lista de listas a lista
+    authors_list = [item for sublist in authors_list for item in sublist]
+
+    # Contar las apariciones de cada autor
+    authors_count = {i:authors_list.count(i) for i in authors_list}
+
+    # Convertir el diccionario a un DataFrame
+    authors = pd.DataFrame(list(authors_count.items()), columns=['author', 'publications'])
 
     # Guardar el DataFrame en un archivo CSV
-    df.to_csv(f'IBD_Grupo2-P2/2-static_data/output.csv', index=False)
+    documents.to_csv(f'../2-static_data/documents.csv', index=False)
+    authors.to_csv(f'../2-static_data/authors.csv', index=False)
