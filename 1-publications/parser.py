@@ -64,6 +64,8 @@ def json_to_csv():
     # Creamos un DataFrame vacío
     documents = pd.DataFrame(columns=['file_name', 'title', 'publication_date'])
 
+    # Creamos un DataFrame vacío
+    df = pd.DataFrame(columns=['paperId', 'title', 'abstract', 'year', 'publicationDate',   'authorId', 'authorName'])
 
     authors_list = []       # Lista de listas de autores
 
@@ -91,6 +93,16 @@ def json_to_csv():
 
         # Añadir los datos al DataFrame en la última fila
         documents.loc[len(documents)] = [data['paperId'], data['title'], data['publicationDate']]
+
+        # Añadir los datos al DataFrame en la última fila
+        df.loc[len(df)] = [data['paperId'], data['title'], data['abstract'], data['year'], data['publicationDate'], author_ids, author_names]
+
+    # Si carpeta /csv no existe, la crea
+    if not os.path.exists('./csv'):
+        os.makedirs('./csv')
+
+    # Guardar el DataFrame en un archivo CSV
+    df.to_csv(f'./csv/output.csv', index=False)
 
     # Convertir lista de listas a lista
     authors_list = [item for sublist in authors_list for item in sublist]
