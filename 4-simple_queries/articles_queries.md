@@ -7,7 +7,7 @@
 
 ````sql
 // Cargamos los datos del CSV
-LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/parser/csv/output.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://github.com/noachuartzt/IBD_Grupo2-P2/raw/main/2-static_data/output.csv' AS row
 
 // Crear nodo Paper y Authors
 CREATE (:Paper {id: row.id, title: row.title}) WITH row, split(row.authors, ";") AS authors
