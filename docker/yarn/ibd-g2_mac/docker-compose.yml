@@ -95,8 +95,8 @@ services:
       - ../hadoop.env
 
   historyserver:
-    image: cbadenes/hadoop-historyserver:3.3.5
-    # image: noachuartzt/ibd-g2_hadoop-historyserver_mac:3.3.5
+    # image: cbadenes/hadoop-historyserver:3.3.5
+    image: noachuartzt/ibd-g2_hadoop-historyserver_mac:3.3.5
     container_name: historyserver
     restart: always
     environment:
