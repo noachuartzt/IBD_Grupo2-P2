@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import col, isnull
-import json_rdd
+import json
 
 spark = SparkSession.builder.appName("lengthwordCount").getOrCreate()
 
