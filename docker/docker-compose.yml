@@ -1,8 +1,9 @@
 version: '3'
 
-  shared-workspace:
-    name: "distributed-file-system"
-    driver: local
+volumes:
+    shared-workspace:
+      name: "distributed-file-system"
+      driver: local
 
 services:
 
