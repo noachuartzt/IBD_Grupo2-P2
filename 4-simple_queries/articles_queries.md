@@ -17,10 +17,6 @@ SET p.abstract = CASE WHEN row.abstract IS NOT NULL THEN row.abstract ELSE "Unkn
 WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names, p
 UNWIND range(0, size(ids)-1) AS i
 
-// Crear nodo Author
-WITH row, split(row.authorId, ',') AS ids, split(row.authorName, ',') AS names, p
-UNWIND range(0, size(ids)-1) AS i
-
 MERGE (a:Author {id: ids[i]})
 SET a.name = names[i]
 
@@ -29,6 +25,7 @@ MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
 ````
 
 Consultas:
+
 ````sql
 // Consulta 1
 MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'}) WITH p
