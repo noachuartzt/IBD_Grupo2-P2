@@ -8,7 +8,7 @@ spark = SparkSession.builder.appName("keywordCount").getOrCreate()
 # Preprocesado
 # =====================================================================
 
-# Leer todos los archivos JSON del corpus (uniendolos en un mismo DataFrame)
+# Leer todos los archivos JSON del corpus (uniéndolos en un mismo DataFrame)
 corpus = ["2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.json", "7dee9f8f534df0cbb38b12d3bb7c84f86c704fd0.json", "f8d9409606abc438537d3a249b56ec0ac8e62e91.json"]
 json_df = spark.read.json(["datain/" + file for file in corpus])
 
