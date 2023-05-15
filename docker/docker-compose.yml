@@ -1,9 +1,9 @@
-version: '3'
+version: "3.6"
 
 volumes:
-    shared-workspace:
-      name: "distributed-file-system"
-      driver: local
+  shared-workspace:
+    name: "hadoop-distributed-file-system"
+    driver: local
 
 services:
 
