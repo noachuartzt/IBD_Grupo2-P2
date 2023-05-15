@@ -5,29 +5,30 @@ from pyspark.sql.functions import col, isnull
 # Create the Spark session
 spark = SparkSession.builder.appName("keywordCount").getOrCreate()
 
-# Read the JSON file into a DataFrame
-json_df = spark.read.json("datain/2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.json")
+# Preprocesado
+# =====================================================================
 
-# Add a new column 'is_null' indicating whether 'abstract' column is null or not
-json_df_with_null = json_df.withColumn('is_null', col('abstract').isNull())
+# Leer todos los archivos JSON del corpus (uniendolos en un mismo DataFrame)
+corpus = ["2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.json", "7dee9f8f534df0cbb38b12d3bb7c84f86c704fd0.json", "f8d9409606abc438537d3a249b56ec0ac8e62e91.json"]
+json_df = spark.read.json(["datain/" + file for file in corpus])
 
-# Show the 'is_null' column
-if json_df_with_null.select('is_null').first()[0] == False:
-    
-    # Seleccionar el campo text y convertirlo en un RDD
-    words_rdd = json_df.select("abstract").rdd.flatMap(lambda x: x[0].split())
+# Eliminar registros con abstract nulo
+json_df_filtered = json_df.filter(col('abstract').isNotNull())
 
-    # Lista de palabras
-    words_to_count = ["science", "artificial", "intelligence", "the", "The"]
+# MAP-REDUCE
+# =====================================================================
 
-    # Contar las palabras
-    counts_rdd = words_rdd.filter(lambda word: word in words_to_count).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
+# Seleccionar el campo abstract y convertirlo en un RDD
+words_rdd = json_df_filtered.select("abstract").rdd.flatMap(lambda x: x[0].split())
 
-    # Mostrar los resultados
-    print(counts_rdd.collect())
-    
-else:
-    raise ValueError("The 'abstract' section of the paper contains null values. Please select another section of the paper or instead another paper.")
+# Lista de palabras
+words_to_count = ["science", "artificial", "intelligence", "the", "The"]
+
+# Contar las palabras
+counts_rdd = words_rdd.filter(lambda word: word in words_to_count).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
+
+# Mostrar los resultados
+print(counts_rdd.collect())
 
 # Cerrar la sesión de Spark
 spark.stop()
