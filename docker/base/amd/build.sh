@@ -1,1 +1,0 @@
-docker build -t bigdatainf/hadoop-base:3.3.5 .

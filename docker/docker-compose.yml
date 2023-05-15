@@ -59,15 +59,7 @@ services:
       - spark-master
 
 # ----------------------------------------------------------------------------------------------
-  jupyter:
-    image: jupyter/minimal-notebook
-    ports:
-      - 8888:8888
-    command: ["start-notebook.sh",
-              "--NotebookApp.token=''",
-              "--NotebookApp.password=''"]
 
-# ----------------------------------------------------------------------------------------------
   neo4j:
       hostname: neo4j
       image: neo4j:4.4.17-community
@@ -95,73 +87,3 @@ services:
       - ./data/:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    networks:
-      - bdi_net
-
-
-
-# ----------------------------------------------------------------------------------------------
-
-  namenode:
-    image: noachuartzt/ibd-g2_hadoop-namenode_mac:3.3.5
-    container_name: namenode
-    restart: always
-    ports:
-      - 9870:9870
-      - 9000:9000
-    volumes:
-      - ./data/namenode:/hadoop/dfs/name
-      - ./jobs:/app
-    working_dir: /app
-    environment:
-      - CLUSTER_NAME=test
-      - HOME=/app
-    env_file:
-      - ../hadoop.env
-
-  datanode1:
-    image: noachuartzt/ibd-g2_hadoop-datanode_mac:3.3.5
-    container_name: datanode1
-    restart: always    
-    volumes:
-      - ./data/datanode1:/hadoop/dfs/data
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870"
-    env_file:
-      - ../hadoop.env
-
-  nodemanager1:
-    image: noachuartzt/ibd-g2_hadoop-nodemanager_mac:3.3.5
-    container_name: nodemanager1
-    restart: always    
-    environment:
-      SERVICE_PRECONDITION: "datanode1:9864"
-    env_file:
-      - ../hadoop.env
-
-  resourcemanager:
-    image: noachuartzt/ibd-g2_hadoop-resourcemanager_mac:3.3.5
-    container_name: resourcemanager
-    restart: always
-    ports:
-      - 8088:8088
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864"
-    env_file:
-      - ../hadoop.env
-
-  historyserver:
-    image: cbadenes/hadoop-historyserver:3.3.5
-    #image: noachuartzt/ibd-g2_hadoop-historyserver_mac:3.3.5
-    container_name: historyserver
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "resourcemanager:8088"
-    volumes:
-      - ./data/historyserver:/hadoop/yarn/timeline
-    env_file:
-      - ../hadoop.env
-
-networks:
-  bdi_net:
-    driver: bridge
