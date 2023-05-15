@@ -21,16 +21,12 @@ public class WordLengthCount {
         // Setup (se ejecuta una sola vez antes de la ejecución del maper) el cual se utiliza para leer el archivo de entrada que contiene las longitudes de las palabras a contar.
         public void setup(Context context) throws IOException {
             Configuration conf = context.getConfiguration();
-            conf.set("lengthsFile.txt", "../../docker/yarn/jobs/");
-            FileSystem fs = FileSystem.get(conf);
-            Path lengthsFilePath = new Path(conf.get("lengthsFile"));
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(lengthsFilePath)));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lengthsToCount.add(Integer.parseInt(line.trim()));
+            int[] lengthsToCountArray = conf.getInts("lengthsToCount");
+            for (int length : lengthsToCountArray) {
+                lengthsToCount.add(length);
             }
-            reader.close();
         }
+        
 
         // Método map que toma como entrada un objeto clave, un texto y un contexto de mapa y emite una clave y un valor de longitud de palabra e 1 si la longitud de la palabra está en la lista de longitudes a contar
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -63,9 +59,26 @@ public class WordLengthCount {
     // Método principal que configura el trabajo Hadoop MapReduce y lo ejecuta
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        conf.set("lengthsFile", "./lengthsFile.txt");
         Job job = Job.getInstance(conf, "word length count");
         job.setJarByClass(WordLengthCount.class);
+    
+        // Nuevo código para leer el archivo lengthsFile.txt y almacenar las longitudes de palabra en un array
+        FileSystem fs = FileSystem.get(conf);
+        Path lengthsFilePath = new Path("./lengthsFile.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(lengthsFilePath)));
+        String line;
+        List<Integer> lengthsToCount = new ArrayList<Integer>();
+        while ((line = reader.readLine()) != null) {
+            lengthsToCount.add(Integer.parseInt(line.trim()));
+        }
+        reader.close();
+        int[] lengthsToCountArray = new int[lengthsToCount.size()];
+        for (int i = 0; i < lengthsToCount.size(); i++) {
+            lengthsToCountArray[i] = lengthsToCount.get(i);
+        }
+    
+        // Configurar el trabajo Hadoop MapReduce y ejecutarlo
+        job.getConfiguration().setInts("lengthsToCount", lengthsToCountArray);
         job.setMapperClass(TokenizerMapper.class);
         job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
@@ -75,5 +88,7 @@ public class WordLengthCount {
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
+    
 }
 
+// leer fichero en el main extraer las palabras y alamcenar en un array y ya a partir de ahí el resto
