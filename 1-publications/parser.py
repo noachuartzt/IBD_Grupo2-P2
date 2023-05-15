@@ -26,7 +26,7 @@ def doi_to_json():
     # Realiza una petición POST a la API de SemanticScholar
     r = requests.post(
         'https://api.semanticscholar.org/graph/v1/paper/batch',
-        params={'fields': 'url,title,abstract,year,publicationDate,authors'},
+        params={'fields': 'title,abstract,year,publicationDate,authors'},
         json={"ids": dois}
     )
 
@@ -116,3 +116,5 @@ def json_to_csv():
     # Guardar el DataFrame en un archivo CSV
     documents.to_csv(f'../2-static_data/documents.csv', index=False)
     authors.to_csv(f'../2-static_data/authors.csv', index=False)
+
+
