@@ -42,10 +42,4 @@ ORDER BY numAuthors ASC
 MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
 RETURN p.title, COUNT (b) + 1 as Count
 ORDER BY Count ASC
-
-// Consulta 2
-MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
-WITH b, COUNT(p) AS collaborations
-ORDER BY collaborations DESC
-RETURN b.name AS Name, collaborations 
 ````
