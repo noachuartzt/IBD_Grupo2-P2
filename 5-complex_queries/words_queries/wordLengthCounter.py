@@ -3,7 +3,7 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import col, isnull
 import json_rdd
 
-spark = SparkSession.builder.appName("keywordCount").getOrCreate()
+spark = SparkSession.builder.appName("lengthwordCount").getOrCreate()
 
 # Leer el archivo JSON a un DataFrame
 json_files = ["2ca14fe14f0bd2f1363f3b735e788d12c3f9f332.json", "7dee9f8f534df0cbb38b12d3bb7c84f86c704fd0.json"]
