@@ -37,7 +37,7 @@ def doi_to_json():
 
         # Comprueba si el paper existe
         if i is not None:
-            output = json.dumps(i, indent=4)
+            output = json.dumps(i)
 
             filename = i['paperId']
 

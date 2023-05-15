@@ -1,18 +1,1 @@
-{
-    "paperId": "2038383fedccdf0b8c1efcb0832ecd18b481b3c1",
-    "url": "https://www.semanticscholar.org/paper/2038383fedccdf0b8c1efcb0832ecd18b481b3c1",
-    "title": "Overview of Big Data and Its Visualization",
-    "abstract": "Big Data is data sets that are so voluminous and complex that traditional data processing application software are inadequate to deal with them. This chapter discusses what Big Data is and its characteristics, and how this information revolution of Big Data is transforming our lives and the new technology and methodologies that have been developed to process data of these huge dimensionalities. This chapter discusses the components of the Big Data stack interface, categories of Big Data analytics software and platforms, descriptions of the top 20 Big Data analytics software. Big Data visualization techniques are discussed with real data from fatality analysis reporting system (FARS) managed by National Highway Traffic Safety Administration (NHTSA) of the United States Department of Transportation. Big Data web-based visualization software are discussed that are both JavaScript-based and user-interface-based. This chapter also discusses the challenges and opportunities of using Big Data and presents a flow diagram of the 30 chapters within this handbook.",
-    "year": 2022,
-    "publicationDate": null,
-    "authors": [
-        {
-            "authorId": "3128073",
-            "name": "R. Segall"
-        },
-        {
-            "authorId": "2052804160",
-            "name": "G. Niu"
-        }
-    ]
-}
+{"paperId": "2038383fedccdf0b8c1efcb0832ecd18b481b3c1", "url": "https://www.semanticscholar.org/paper/2038383fedccdf0b8c1efcb0832ecd18b481b3c1", "title": "Overview of Big Data and Its Visualization", "abstract": "Big Data is data sets that are so voluminous and complex that traditional data processing application software are inadequate to deal with them. This chapter discusses what Big Data is and its characteristics, and how this information revolution of Big Data is transforming our lives and the new technology and methodologies that have been developed to process data of these huge dimensionalities. This chapter discusses the components of the Big Data stack interface, categories of Big Data analytics software and platforms, descriptions of the top 20 Big Data analytics software. Big Data visualization techniques are discussed with real data from fatality analysis reporting system (FARS) managed by National Highway Traffic Safety Administration (NHTSA) of the United States Department of Transportation. Big Data web-based visualization software are discussed that are both JavaScript-based and user-interface-based. This chapter also discusses the challenges and opportunities of using Big Data and presents a flow diagram of the 30 chapters within this handbook.", "year": 2022, "publicationDate": null, "authors": [{"authorId": "3128073", "name": "R. Segall"}, {"authorId": "2052804160", "name": "G. Niu"}]}
