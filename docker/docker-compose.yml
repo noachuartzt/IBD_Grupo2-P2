@@ -80,10 +80,13 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     networks:
       - bdi_net
+
 networks:
   bdi_net:
     driver: bridge
