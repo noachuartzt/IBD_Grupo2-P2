@@ -71,6 +71,8 @@ Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch po
 
 El archivo `texts.ipynb` nos propociona los códigos necesarios para acceder al cluster autogestionado de Elasticsearch via HTTP por el puerto 9200 del localhost. Una vez conectado, se puede indexar datos, solo en caso de que es la primera vez que levantas el contenedor o quieres añadir nuevos datos. Sin embargo, en caso contrario no es necesario ejercutarlo. A continuación, está la query necesaria para consultar por el término clave que quieras. Al ejecutar la celda te pedirá como input una palabra clave y como resultado te devolverá un dataframe ordenado por score(relevancia)  de los párrafos y el título del artículo.
 
-Por último, en el caso de que quieras eliminar un índice, también es posible con la ejecución de la última celda del ipynb. Sin embargo, los índices borrados no son recuperables.
+Por último, en el caso de que quieras eliminar un índice, también es posible con la ejecución de la última celda del ipynb.  
+
+***NOTA***: los índices borrados no son recuperables.
 
 ### 6. Complex Queries
