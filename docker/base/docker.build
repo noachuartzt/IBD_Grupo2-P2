@@ -1,1 +1,0 @@
-docker build -t cbadenes/spark-base:0.0.1 .
