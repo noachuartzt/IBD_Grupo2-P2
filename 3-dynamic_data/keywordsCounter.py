@@ -30,10 +30,11 @@ json_df_filtered = json_df.filter(col('abstract').isNotNull())
 words_rdd = json_df_filtered.select("abstract").rdd.flatMap(lambda x: x[0].split())
 
 # Lista de palabras
-words_to_count = ["science", "artificial", "intelligence", "the", "The"]
+words_to_count = ["science", "artificial", "intelligence", "The"]
+words_to_count = [word.lower() for word in words_to_count]
 
 # Contar las palabras
-counts_rdd = words_rdd.filter(lambda word: word in words_to_count).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
+counts_rdd = words_rdd.filter(lambda word: word.lower() in words_to_count).map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
 
 # Mostrar los resultados
 print(counts_rdd.collect())
