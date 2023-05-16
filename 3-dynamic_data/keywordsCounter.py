@@ -42,7 +42,7 @@ counts_rdd = words_rdd.filter(lambda word: word.lower() in words_to_count).map(l
 # Mostrar los resultados
 print(counts_rdd.collect())
 
-# # Keywords.csv
+# Keywords.csv
 # =====================================================================
 # Convertir a DataFrame la lista resultado
 counts_df = pd.DataFrame(counts_rdd.collect(), columns=["word", "frequency"])
