@@ -29,7 +29,7 @@ MERGE (p)-[:WRITTEN_BY {authorId: row.authorId}]->(a)
 Consultas:
 ````sql
 MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
-WITH b, COUNT(p) AS collaborations
+WITH b, COUNT(p) AS Collaborations
 ORDER BY collaborations DESC
-RETURN b.name AS Name, collaborations 
+RETURN b.name AS Name, Collaborations 
 ````
