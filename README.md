@@ -23,13 +23,13 @@ Para la realización de la práctica serán necesarios los siguientes servicios:
 
 ## Pasos
 
-### 1. Clonado del repositorio de GitHub
+### 0. Clonado del repositorio de GitHub
 
-**1.1** Dirígete al buscador de Windows y busca `cmd` o `powershell` para abrir la terminal de tu ordenador.
+**0.1** Dirígete al buscador de Windows y busca `cmd` o `powershell` para abrir la terminal de tu ordenador.
 
 ***NOTA***: si se realiza desde MAC OS teclee `cmd`+`espace` para buscar y abrir la terminal de tu ordenador.
 
-**1.2** Una vez en la terminal, sitúate en la carpeta donde quieres clonar el repositorio, puedes hacerlo usando el siguiente comando: 
+**0.2** Una vez en la terminal, sitúate en la carpeta donde quieres clonar el repositorio, puedes hacerlo usando el siguiente comando: 
 
 ```
 cd <path>
@@ -41,7 +41,7 @@ cd <path>
 cd "<path>"
 ```
 
-**1.3** Una vez en la carpeta deseada, ejecuta el siguiente comando para clonar el repositorio:
+**0.3** Una vez en la carpeta deseada, ejecuta el siguiente comando para clonar el repositorio:
 
 ```
 git clone "https://github.com/noachuartzt/IBD_Grupo2-P2"
@@ -51,7 +51,7 @@ Para este paso, se ha proporcionado el HTTPS del repositorio de GitHub. Esta URL
 
 ***NOTA***: Pero también se podría realizar mediante una llave SSH. Para ello, siga el fichero [MAC_guide](MAC_guide.md)
 
-**1.4** Una vez clonado el repositorio, accede a la carpeta clonada:
+**0.4** Una vez clonado el repositorio, accede a la carpeta clonada:
 
 ```
 cd IBD_Grupo2-P2 
@@ -59,12 +59,15 @@ cd IBD_Grupo2-P2
 
 Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creación de la imagen a través del terminal.
 
-### 2. Publications
-### 3. Static Data
-### 4. Dynamic Data
+### 1. Publications
 
-### 5. Simple Queries
-#### 5.2 Texts
+### 2. Static Data
+
+### 3. Dynamic Data
+
+### 4. Simple Queries
+
+#### 4.2 Texts
 Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
 
 Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch por su eficiencia en cuanto al indexado. Primero, hay que conectar al contenedor "elasticsearch". Para ello, vamos a utilizar el cliente de Python para Elasicsearch. Accedemos al `texts.ipynb` que se encuentra en el directorio `4-simple_queries/`.
@@ -75,4 +78,4 @@ Por último, en el caso de que quieras eliminar un índice, también es posible 
 
 ***NOTA***: los índices borrados no son recuperables.
 
-### 6. Complex Queries
+### 5. Complex Queries
