@@ -1,6 +1,9 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import col, isnull
+import shutil
+import glob
+import csv
 
 # Crear la sesión Spark
 spark = SparkSession.\
@@ -40,11 +43,28 @@ print(counts_rdd.collect())
 
 # Keywords.csv
 # =====================================================================
-# Convertir a DataFrame la lista resultado
-counts_df = counts_rdd.toDF(["word", "frequency"])
-
 # Guardar en CSV
-counts_df.write.csv("dataout/Keywords.csv", header=True, mode="overwrite")
+counts_df = counts_rdd.toDF() # convertir a DataFrame la lista resultado
+counts_df.write.csv("dataout/temp", mode="overwrite") # guardamos los resultados de cada worker
+
+# Obtener todos los archivos CSV generados en el directorio temporal
+csv_files = glob.glob("dataout/temp/*.csv")
+
+# Fusionar los archivos CSV en uno solo
+with open("dataout/Keywords.csv", "w", newline="") as outfile:
+    writer = csv.writer(outfile)
+    writer.writerow(["word", "frequency"]) # Escribir los nuevos nombres de las columnas
+
+    # Leer cada archivo CSV y copiar sus contenidos al archivo de salida
+    for csv_file in csv_files:
+        with open(csv_file, "r", newline="") as infile:
+            reader = csv.reader(infile)
+            for row in reader:
+                writer.writerow(row)
+                
+# Borramos el fichero temp
+folder_path = "dataout/temp"
+shutil.rmtree(folder_path) # borramos la carpeta y su contenido
 
 # Cerrar la sesión de Spark
 spark.stop()
