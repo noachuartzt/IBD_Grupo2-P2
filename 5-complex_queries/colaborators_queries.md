@@ -30,6 +30,6 @@ Consultas:
 ````sql
 MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
 WITH b, COUNT(p) AS Collaborations
-ORDER BY collaborations DESC
+ORDER BY Collaborations DESC
 RETURN b.name AS Name, Collaborations 
 ````
