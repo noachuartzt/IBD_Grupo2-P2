@@ -92,6 +92,14 @@ Los archivos mencionados anteriormente, se han generado mediante el [parse.py](1
 
 ### 3. Dynamic Data
 
+En este apartado se pretende generar: 
+
+- **Keywords.csv**: contiene el número de apariciones de un término concreto (e.g. ‘virus’), o cualquiera de sus sinónimos en inglés (e.g. ‘infection’, ‘microbe’..), en el corpus
+    -Columnas: ‘word’ y ‘frequency’
+
+Para ello, hemos creado un MapReduce. Es un único programa guardado con dos distintas extensiones:
+- [keywordsCounter.ipynb](/3-dynamic_data/keywordsCounter.ipynb): se trata de un notebook de **jupyter** que contiene el código necesario para generar un archivo `csv` con la frecuencia de las palabras indicadas como keywords (input) de los documentos.
+
 ### 4. Simple Queries
 
 En este apartado, disponemos de 2 ficheros:
