@@ -116,11 +116,11 @@ En este apartado, disponemos de 2 ficheros:
 - [articles_queries.md](/4-simple_queries/articles_queries.md): contiene la query necesaria para listar ordenadamente los artículos en los que un autor específico ha participado.
 - [texts.ipynb](/4-simple_queries/texts.ipynb): contiene el código necesario para listar ordenadamente los párrafos por el tamaño del párrafo y la frecuencia del término.
 
-### Articles
+### 4.1.Articles
 
 Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.
 
-### Texts
+### 4.2.Texts
 
 Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
 
