@@ -4,7 +4,7 @@
 </center>
 <i><small>**Alumnos:** Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño<br>Última actualización: 2023-05-01</small></i></div>
 
-Este repositorio contiene los archivos necesarios para crear una infraestructura basada en Docker que soporte la gestión enriquecida de publicaciones científicas en formato PDF para el archivo digital de la Universidad Politécnica de Madrid (UPM) que actualmente gestiona los trabajos fin de grado, fin de tesis y tesis doctorales de los alumnos de la Universidad pero se pide una nueva versión de la plataforma para poder gestionar también las publicaciones científicas de sus investigadores, lo cual es un desafío porque el volumen de datos que se ha de soportar es mucho mayor que con los TFGs, TFMs, y tesis. En cuanto a la parte de la gestión enriquecida, se quieren ofrecer datos estadísticos sobre los autores de las publicaciones, sus colaboraciones, las áreas de investigación, y además facilitar la exploración de su contenido y la búsqueda avanzada desde su propio portal web. La infraestructura se basa en **Apache Hadoop** como sistema de almacenamiento distribuido.
+Este repositorio contiene los archivos necesarios para crear una infraestructura basada en Docker que soporte la gestión enriquecida de publicaciones científicas en formato PDF para el archivo digital de la Universidad Politécnica de Madrid (UPM) que actualmente gestiona los trabajos fin de grado, fin de tesis y tesis doctorales de los alumnos de la Universidad pero se pide una nueva versión de la plataforma para poder gestionar también las publicaciones científicas de sus investigadores, lo cual es un desafío porque el volumen de datos que se ha de soportar es mucho mayor que con los TFGs, TFMs, y tesis. En cuanto a la parte de la gestión enriquecida, se quieren ofrecer datos estadísticos sobre los autores de las publicaciones, sus colaboraciones, las áreas de investigación, y además facilitar la exploración de su contenido y la búsqueda avanzada desde su propio portal web.
 
 El siguiente repositorio está dividido en 5 apartados (*carpetas*):
 - **(1-publications)**: contiene los archivos necesarios para la conversión de los documentos PDF a `json` a partir de una lista de DOIs.
@@ -102,6 +102,14 @@ Para la realización de la práctica serán necesarios los siguientes servicios:
     Para ello, hemos creado un MapReduce. Es un único programa guardado con dos distintas extensiones:
     - [keywordsCounter.ipynb](/3-dynamic_data/keywordsCounter.ipynb): se trata de un notebook de **jupyter** que contiene el código necesario para generar un archivo `csv` con la frecuencia de las palabras indicadas como keywords (input) de los documentos.
 
+    Se ha decidido utilizar la tecnología map reduce en spark por los siguinetes motivos:
+
+    - **Tipo de conteo**: a diferencia de otras tecnologías, map reduce permite realizar un conteo de palabras de forma eficiente. Además de contar palabaras duplicadas en mismo documento, contrario a lo que sucede con otras tecnologías como elastic search.
+    - **Escalabilidad**: Spark es una tecnología escalable, que permite procesar grandes volúmenes de datos de forma eficiente, como sucede con el caso de nuestro corpus.
+    - **Facilidad de uso**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Y sin necesidad de usar java, como en el caso de Hadoop.
+    - **Velocidad**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Que quizás en el caso de unso papers científicos no es tan necesaria. Pero que en el caso de un corpus de papers a nivel internacional, sí que puede ser necesario.
+
+
 ## 4. Simple Queries
 
     En este apartado, disponemos de 2 ficheros:
@@ -113,9 +121,6 @@ Para la realización de la práctica serán necesarios los siguientes servicios:
     Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.
 
     ## Texts
-
-
-
 
     ### 4.2 Texts
     Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
