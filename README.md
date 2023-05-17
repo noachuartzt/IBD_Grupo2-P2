@@ -1,5 +1,7 @@
-# IBD_Grupo2-P2: *Infraestructura UPM para publicaciones científicas*
-
+<center>
+<h1> Infraestructura UPM para publicaciones científicas </h1>
+<h2> IBD_Grupo2-P2</h2>
+</center>
 <i><small>**Alumnos:** Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño<br>Última actualización: 2023-05-01</small></i></div>
 
 Este repositorio contiene los archivos necesarios para crear una infraestructura basada en Docker que soporte la gestión enriquecida de publicaciones científicas en formato PDF para el archivo digital de la Universidad Politécnica de Madrid (UPM) que actualmente gestiona los trabajos fin de grado, fin de tesis y tesis doctorales de los alumnos de la Universidad pero se pide una nueva versión de la plataforma para poder gestionar también las publicaciones científicas de sus investigadores, lo cual es un desafío porque el volumen de datos que se ha de soportar es mucho mayor que con los TFGs, TFMs, y tesis. En cuanto a la parte de la gestión enriquecida, se quieren ofrecer datos estadísticos sobre los autores de las publicaciones, sus colaboraciones, las áreas de investigación, y además facilitar la exploración de su contenido y la búsqueda avanzada desde su propio portal web. La infraestructura se basa en **Apache Hadoop** como sistema de almacenamiento distribuido.
@@ -15,7 +17,7 @@ El siguiente repositorio está dividido en 5 apartados (*carpetas*):
 Todos los archivos han sido creados y modificados por los miembros del **Grupo 2** de la asignatura de IBD de ***Ciencia de Datos e Inteligencia Artificial de la Universidad Politécnica de Madrid*** (*UPM*): Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño.
 ****
 
-## Requisitos
+# Requisitos
 
 Para la realización de la práctica serán necesarios los siguientes servicios:
 
@@ -24,9 +26,9 @@ Para la realización de la práctica serán necesarios los siguientes servicios:
 
 ***
 
-## Pasos
+# Pasos
 
-### 0. Clonado del repositorio de GitHub
+## 0. Clonado del repositorio de GitHub
 
 **0.1** Dirígete al buscador de Windows y busca `cmd` o `powershell` para abrir la terminal de tu ordenador.
 
@@ -62,7 +64,7 @@ cd IBD_Grupo2-P2
 
 Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creación de la imagen a través del terminal.
 
-### 1. Publications
+## 1. Publications
 
 En este apartado disponemos de **2 carpetas y 3 ficheros**:
 - [json](/json): carpeta que contiene por cada DOI existente en [Semantic Web Scholar API](https://api.semanticscholar.org/), un archivo `json` con la meta-información del documento.
@@ -71,7 +73,7 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 - [parse.py](/parse.py): fichero que contiene las funciones necesarias para parsear los archivos `json` y generar el archivo `csv`.
 - [test.ipynb](/test.ipynb): fichero que contiene el código necesario para ejecutar el (parse.py)[/parse.py] y generar los archivos previamente mencionados.
 
-#### Instrucciones
+### Instrucciones
 
 1. Dirígete a la carpeta `1-publications` del repositorio clonado y abre el **jupyter-notebook** `test.ipynb` (*no hace falta hacerlo desde la terminal*):
 2. Una vez abierto, **vscode** o culalquier otro editor de texto, ejecuta todas las celdas del notebook.
@@ -81,7 +83,7 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 ***NOTA 2***: El archivo generado en [csv/output](/csv/output.csv) es el que se utilizará en el siguiente apartado, [2-static_data](/2-static_data).
 
 
-### 2. Static Data
+## 2. Static Data
 
 En este apartado, disponemos de 2 ficheros `csv`:
 - [authors.csv](/2-static_data/authors.csv): fichero que contiene el número de publicaciones por autor. (*author, puublications*)
@@ -90,7 +92,7 @@ En este apartado, disponemos de 2 ficheros `csv`:
 Los archivos mencionados anteriormente, se han generado mediante el [parse.py](1-publications/parse.py) del apartado anterior, en la función `json_to_csv`.
 
 
-### 3. Dynamic Data
+## 3. Dynamic Data
 
 En este apartado se pretende generar: 
 
@@ -100,22 +102,22 @@ En este apartado se pretende generar:
 Para ello, hemos creado un MapReduce. Es un único programa guardado con dos distintas extensiones:
 - [keywordsCounter.ipynb](/3-dynamic_data/keywordsCounter.ipynb): se trata de un notebook de **jupyter** que contiene el código necesario para generar un archivo `csv` con la frecuencia de las palabras indicadas como keywords (input) de los documentos.
 
-### 4. Simple Queries
+## 4. Simple Queries
 
 En este apartado, disponemos de 2 ficheros:
 - [articles_queries.md](/4-simple_queries/articles_queries.md): contiene la query necesaria para listar ordenadamente los artículos en los que un autor específico ha participado.
 - [texts.ipynb](/4-simple_queries/texts.ipynb): contiene el código necesario para listar ordenadamente los párrafos por el tamaño del párrafo y la frecuencia del término.
 
-#### Articles
+### Articles
 
 Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.
 
-### Texts
+## Texts
 
 
 
 
-#### 4.2 Texts
+### 4.2 Texts
 Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
 
 Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch por su eficiencia en cuanto al indexado. Primero, hay que conectar al contenedor "elasticsearch". Para ello, vamos a utilizar el cliente de Python para Elasicsearch. Accedemos al `texts.ipynb` que se encuentra en el directorio `4-simple_queries/`.
@@ -126,9 +128,9 @@ Por último, en el caso de que quieras eliminar un índice, también es posible 
 
 ***NOTA***: los índices borrados no son recuperables.
 
-### 5. Complex Queries
+## 5. Complex Queries
 
-### Docker
+## Docker
 
 Hay dos ficheros disponibles en este directorio:
 
