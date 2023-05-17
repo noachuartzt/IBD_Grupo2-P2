@@ -73,7 +73,7 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 - [parse.py](/parse.py): fichero que contiene las funciones necesarias para parsear los archivos `json` y generar el archivo `csv`.
 - [test.ipynb](/test.ipynb): fichero que contiene el código necesario para ejecutar el (parse.py)[/parse.py] y generar los archivos previamente mencionados.
 
-### Instrucciones
+### 1.1.Instrucciones
 
 1. Dirígete a la carpeta `1-publications` del repositorio clonado y abre el **jupyter-notebook** `test.ipynb` (*no hace falta hacerlo desde la terminal*):
 2. Una vez abierto, **vscode** o culalquier otro editor de texto, ejecuta todas las celdas del notebook.
@@ -118,13 +118,17 @@ En este apartado, disponemos de 2 ficheros:
 
 ### 4.1.Articles
 
-Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.
+Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.  
+
+Teniendo en mente las consultas del apartado **4.1** y **5.1**, pensamos que lamejor solución tanto para el volumen de datos como para una mayor eficiencia, es la de utilizar una base de datos de grafos. Por ello, hemos decidido utilizar Neo4j.
+
+Las consultas de este apartado están recogidas en el archivo [articles_queries.md](/4-simple_queries/articles_queries.md), que crean la base de datos con los ficheros creados en los apartados anteriores y realizan las consultas necesarias para obtener los artículos en los que un autor específico ha participado.
 
 ### 4.2.Texts
 
 Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
 
-Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch por su eficiencia en cuanto al indexado. Primero, hay que conectar al contenedor "elasticsearch". Para ello, vamos a utilizar el cliente de Python para Elasicsearch. Accedemos al `texts.ipynb` que se encuentra en el directorio `4-simple_queries/`.
+Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch por su eficiencia en cuanto al indexado. Primero, hay que conectar al contenedor "elasticsearch". Para ello, vamos a utilizar el cliente de Python para Elasicsearch, que se encuentra en el archivo [texts.ipynb](/4-simple_queries/texts.ipynb).
 
 El archivo `texts.ipynb` nos propociona los códigos necesarios para acceder al cluster autogestionado de Elasticsearch via HTTP por el puerto 9200 del localhost. Una vez conectado, se puede indexar datos, solo en caso de que es la primera vez que levantas el contenedor o quieres añadir nuevos datos. Sin embargo, en caso contrario no es necesario ejercutarlo. A continuación, está la query necesaria para consultar por el término clave que quieras. Al ejecutar la celda te pedirá como input una palabra clave y como resultado te devolverá un dataframe ordenado por score(relevancia)  de los párrafos y el título del artículo.
 
@@ -134,7 +138,21 @@ Por último, en el caso de que quieras eliminar un índice, también es posible 
 
 ## 5. Complex Queries
 
-### Docker
+En este apartado, disponemos de 2 ficheros:
+- [collaborators_queries.md](/5-complex_queries/collaborators_queries.md).
+- [wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb)
+
+### 5.1.Collaborators
+
+De nuevo acudimos a neo4j para realizar estas consultas ya que al tratarse de una base de datos de grafos es más eficiente para la búqueda de coloaboradores. Ya que en este tipo de bases d edatos, las relaciones importan tanto o más que los datos en sí.
+
+Las consultas están recogidas en el fichero [collaborators_queries.md](/5-complex_queries/collaborators_queries.md).
+
+### 5.2.Words
+
+De nuevo utilizamos la tecnología Map Reduce en Spark para realizar esta tarea. En este caso, se utiliza para obtener el número de palabras de longitud n. El notebook[wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb) devuelve una tupla con la longitud n seleccionada y el número de palabras de esa longitud que hay en el corpus.
+
+## 6. Docker
 
 Hay dos ficheros disponibles en este directorio:
 
