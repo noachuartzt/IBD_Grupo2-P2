@@ -1,7 +1,6 @@
-## CONSULTAS SIMPLES
-
-1. ***Articles***: listado ordenado de artículos en los que un autor específico ha participado.
-- La relevancia viene determinada por el número de autores (menor número de autores, mayor relevancia del autor concreto)
+### ***Articles***
+Listado ordenado de artículos en los que un autor específico ha participado.
+- La relevancia viene determinada por el número de autores (_menor número de autores, mayor relevancia del autor concreto_)
 
 Creación de nodos y relaciones:
 ````sql
@@ -28,8 +27,9 @@ Consultas:
 
 ````sql
 // Consulta 1
-MATCH (a:Author)<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'}) 
-RETURN p.title as Title, COUNT (a) as numAuthors
+MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'})
+MATCH (p)-[:WRITTEN_BY]->(a:Author)
+RETURN p.title AS Title, COUNT(a) AS numAuthors
 ORDER BY numAuthors ASC
 ````
 ````sql
