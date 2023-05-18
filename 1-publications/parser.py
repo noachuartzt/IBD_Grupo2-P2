@@ -117,4 +117,6 @@ def json_to_csv():
     documents.to_csv(f'../2-static_data/documents.csv', index=False)
     authors.to_csv(f'../2-static_data/authors.csv', index=False)
 
-
+# if __name__ == '__main__':
+#     doi_to_json()
+#     json_to_csv()
