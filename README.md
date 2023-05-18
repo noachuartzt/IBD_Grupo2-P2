@@ -25,6 +25,7 @@ Para la realización de la práctica serán necesarios los siguientes servicios:
 - Tener instalado **GIT** en su máquina. Si no, puedes descargarlo desde [aquí](https://git-scm.com/downloads).
 - Tener instalado **Docker** en su máquina. Si no, puedes descargarlo desde [aquí](https://www.docker.com/products/docker-desktop/).
 
+
 ***
 
 <h2> Pasos </h2>
@@ -76,8 +77,9 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 
 ### 1.1.Instrucciones
 
-1. Dirígete a la carpeta `1-publications` del repositorio clonado y abre el **jupyter-notebook** `test.ipynb` (*no hace falta hacerlo desde la terminal*):
-2. Una vez abierto, **vscode** o culalquier otro editor de texto, ejecuta todas las celdas del notebook.
+1. Dirígete a la carpeta [1-publications](1-publications) del repositorio clonado y abre el [jupyter-notebook](test.ipynb) (*no hace falta hacerlo desde la terminal*):
+   
+2. Una vez abierto, abre **vscode** o culalquier otro editor de texto, ejecuta todas las celdas del notebook. 
 
 ***NOTA 1***: Dicho fichero, importa de [parse.py](/parse.py) las funciones necesarias `doi_to_json` y `json_to_csv` para parsear la lista de DOIs a los archivos `json` y generar el archivo `csv` respectivamente. No obstante, antes de generar dichos archivos, comprueba si las carpetas [json](/json) y [csv](/csv) existen, si no es así, las crea. Una vez comprobado, ejecuta las funciones mencionadas anteriormente.
 
@@ -86,9 +88,9 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 
 ## 2. Static Data
 
-En este apartado, disponemos de 2 ficheros `csv`:
-- [authors.csv](/2-static_data/authors.csv): fichero que contiene el número de publicaciones por autor. (*author, puublications*)
-- [documents.csv](/2-static_data/documents.csv): fichero que contiene la meta-información de los documentos. (*file_name, title, num_pages, creation_date, modification_date*)
+En este apartado, disponemos de **2 ficheros** `csv`:
+- [authors.csv](/2-static_data/authors.csv): fichero que contiene el número de publicaciones por autor. (Columnas: *author, puublications*)
+- [documents.csv](/2-static_data/documents.csv): fichero que contiene la meta-información de los documentos. (Columnas: *file_name, title, num_pages, creation_date, modification_date*)
 
 Los archivos mencionados anteriormente, se han generado mediante el [parse.py](1-publications/parse.py) del apartado anterior, en la función `json_to_csv`.
 
