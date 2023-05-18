@@ -27,14 +27,14 @@ Consultas:
 
 ````sql
 // Consulta 1
-MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: 'Y. Filali'})
+MATCH (p:Paper)-[:WRITTEN_BY]->(:Author {name: '<author_name>'})
 MATCH (p)-[:WRITTEN_BY]->(a:Author)
 RETURN p.title AS Title, COUNT(a) AS numAuthors
 ORDER BY numAuthors ASC
 ````
 ````sql
 // Otra Opción
-MATCH (a:Author {name: "Y. Filali"})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
+MATCH (a:Author {name: '<author_name>'})<-[:WRITTEN_BY]-(p:Paper)-[:WRITTEN_BY]->(b:Author) WHERE a <> b
 RETURN p.title as Title, COUNT (b) + 1 as numAuthors
 ORDER BY numAuthors ASC
 ````
