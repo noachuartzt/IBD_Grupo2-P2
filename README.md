@@ -83,7 +83,13 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
 
 ***NOTA 1***: Dicho fichero, importa de [/parser.py](1-publications/parser.py) las funciones necesarias `doi_to_json` y `json_to_csv` para parsear la lista de DOIs a los archivos `json` y generar el archivo `csv` respectivamente. No obstante, antes de generar dichos archivos, comprueba si las carpetas [json](1-publications/json) y [csv](1-publications/csv) existen, si no es así, las crea. Una vez comprobado, ejecuta las funciones mencionadas anteriormente.
 
-***NOTA 2***: El archivo generado en [csv/output](/csv/output.csv) es el que se utilizará en el siguiente apartado, [2-static_data](/2-static_data).
+**IMPORTANTE**: El archivo generado en [csv/output](/csv/output.csv) es el que se utilizará en el siguiente apartado, [2-static_data](/2-static_data). Por tanto, **realiza un *commit* al repositorio git**, ya que la consulta **Neo4j** extrae el `csv` generado de **GitHub**. Para ello, abre una terminal y ejecuta los siguientes comandos:
+
+```bash
+git add .
+git commit -m "Files Created"
+git push origin head
+```
 
 
 ## 2. Static Data
