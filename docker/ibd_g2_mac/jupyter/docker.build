@@ -1,0 +1,1 @@
+docker build -t cbadenes/spark-jupyter:0.0.1 .

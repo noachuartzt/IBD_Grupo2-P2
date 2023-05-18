@@ -1,0 +1,1 @@
+docker build -t cbadenes/spark-worker:0.0.1 .
