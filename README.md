@@ -69,11 +69,11 @@ Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creaci�
 ## 1. Publications
 
 En este apartado disponemos de **2 carpetas y 3 ficheros**:
-- [json](1-publications/json): carpeta que contiene por cada DOI existente en [Semantic Web Scholar API](https://api.semanticscholar.org/), un archivo `json` con la meta-información del documento.
-- [csv](1-publications/csv): careta que contiene un archivo `csv` con la meta-información de los documentos parseada y estructurada a partir de los archivos `json`.
-- [corpus.txt](/corpus.txt): fichero que contiene una lista de DOIs de los documentos que se quieren parsear.
-- [parse.py](/parse.py): fichero que contiene las funciones necesarias para parsear los archivos `json` y generar el archivo `csv`.
-- [test.ipynb](/test.ipynb): fichero que contiene el código necesario para ejecutar el (parse.py)[/parse.py] y generar los archivos previamente mencionados.
+- **[json](1-publications/json)**: carpeta que contiene por cada DOI existente en [Semantic Web Scholar API](https://api.semanticscholar.org/), un archivo `json` con la meta-información del documento.
+- **[csv](1-publications/csv)**: carpeta que contiene un archivo `csv` con la meta-información de los documentos parseada y estructurada a partir de los archivos `json`.
+- **[corpus.txt](/corpus.txt)**: fichero que contiene una lista de DOIs de los documentos que se quieren parsear.
+- **[parse.py](/parse.py)**: fichero que contiene las funciones necesarias para parsear los archivos `json` y generar el archivo `csv`.
+- **[test.ipynb](/test.ipynb)**: fichero que contiene el código necesario para ejecutar el [/parser.py](1-publications/parser.py) y generar los archivos previamente mencionados.
 
 ### 1.1.Instrucciones
 
@@ -81,18 +81,21 @@ En este apartado disponemos de **2 carpetas y 3 ficheros**:
    
 2. Una vez abierto, abre **vscode** o culalquier otro editor de texto, ejecuta todas las celdas del notebook. 
 
-***NOTA 1***: Dicho fichero, importa de [parse.py](/parse.py) las funciones necesarias `doi_to_json` y `json_to_csv` para parsear la lista de DOIs a los archivos `json` y generar el archivo `csv` respectivamente. No obstante, antes de generar dichos archivos, comprueba si las carpetas [json](/json) y [csv](/csv) existen, si no es así, las crea. Una vez comprobado, ejecuta las funciones mencionadas anteriormente.
+***NOTA 1***: Dicho fichero, importa de [/parser.py](1-publications/parser.py) las funciones necesarias `doi_to_json` y `json_to_csv` para parsear la lista de DOIs a los archivos `json` y generar el archivo `csv` respectivamente. No obstante, antes de generar dichos archivos, comprueba si las carpetas [json](1-publications/json) y [csv](1-publications/csv) existen, si no es así, las crea. Una vez comprobado, ejecuta las funciones mencionadas anteriormente.
 
 ***NOTA 2***: El archivo generado en [csv/output](/csv/output.csv) es el que se utilizará en el siguiente apartado, [2-static_data](/2-static_data).
 
 
 ## 2. Static Data
 
-En este apartado, disponemos de **2 ficheros** `csv`:
-- [authors.csv](/2-static_data/authors.csv): fichero que contiene el número de publicaciones por autor. (Columnas: *author, puublications*)
-- [documents.csv](/2-static_data/documents.csv): fichero que contiene la meta-información de los documentos. (Columnas: *file_name, title, num_pages, creation_date, modification_date*)
+En este apartado se pretende generar **2 ficheros** `csv`:
 
-Los archivos mencionados anteriormente, se han generado mediante el [parse.py](1-publications/parse.py) del apartado anterior, en la función `json_to_csv`.
+- **authors.csv**: contiene el número de publicaciones por autor. (Columnas: *author, puublications*)
+- **documents.csv**: contiene la meta-información de los documentos. (Columnas: *file_name, title, num_pages, creation_date, modification_date*)
+
+Los archivos mencionados anteriormente, se han generado mediante el [parser.py](1-publications/parser.py) del apartado anterior, en la función `json_to_csv`.
+
+Dado que los datos a generar son datos estáticos, es decir, no cambian con el tiempo, y no se espera un alto volumen de datos, hemos decidido utilizar la tecnología **pandas** para la generación de los archivos `csv`.
 
 
 ## 3. Dynamic Data
@@ -102,40 +105,43 @@ En este apartado se pretende generar:
 - **Keywords.csv**: contiene el número de apariciones de un término concreto (e.g. ‘virus’), o cualquiera de sus sinónimos en inglés (e.g. ‘infection’, ‘microbe’..), en el corpus
     -Columnas: ‘word’ y ‘frequency’
 
-Para ello, hemos creado un MapReduce. Es un único programa guardado con dos distintas extensiones:
+Para ello, hemos creado un **MapReduce**. Es un único programa guardado con dos distintas extensiones:
 - [keywordsCounter.ipynb](/3-dynamic_data/keywordsCounter.ipynb): se trata de un notebook de **jupyter** que contiene el código necesario para generar un archivo `csv` con la frecuencia de las palabras indicadas como keywords (input) de los documentos.
 
-Se ha decidido utilizar la tecnología map reduce en spark por los siguinetes motivos:
+Se ha decidido utilizar la tecnología **map reduce en spark** por los siguinetes motivos:
 
-- **Tipo de conteo**: a diferencia de otras tecnologías, map reduce permite realizar un conteo de palabras de forma eficiente. Además de contar palabaras duplicadas en mismo documento, contrario a lo que sucede con otras tecnologías como elastic search.
+- **Tipo de conteo**: a diferencia de otras tecnologías, *map reduce* permite realizar un conteo de palabras de forma eficiente. Además de contar palabaras duplicadas en mismo documento, contrario a lo que sucede con otras tecnologías como *Elastic Search*.
 - **Escalabilidad**: Spark es una tecnología escalable, que permite procesar grandes volúmenes de datos de forma eficiente, como sucede con el caso de nuestro corpus.
-- **Facilidad de uso**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Y sin necesidad de usar java, como en el caso de Hadoop.
-- **Velocidad**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Que quizás en el caso de unso papers científicos no es tan necesaria. Pero que en el caso de un corpus de papers a nivel internacional, sí que puede ser necesario.
+- **Facilidad de uso**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Y sin necesidad de usar java, como en el caso de *Hadoop*.
+- **Velocidad**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Que quizás en el caso de unos papers científicos no es tan necesaria. Pero que en el caso de un corpus de papers a nivel internacional, sí que puede ser necesario.
 
 
 ## 4. Simple Queries
 
-En este apartado, disponemos de 2 ficheros:
+En este apartado, disponemos de **3 ficheros**:
 - [articles_queries.md](/4-simple_queries/articles_queries.md): contiene la query necesaria para listar ordenadamente los artículos en los que un autor específico ha participado.
+- - [articles.ipynb](/4-simple_queries/articles.ipynb): contiene el código necesario para listar ordenadamente los artículos en los que un autor específico ha participado.
 - [texts.ipynb](/4-simple_queries/texts.ipynb): contiene el código necesario para listar ordenadamente los párrafos por el tamaño del párrafo y la frecuencia del término.
 
 ### 4.1.Articles
 
-Para realizar esta tarea, hemos utilizado la interfaz de línea de comandos de Neo4j. Para ello, vamos a utilizar el cliente de Python para Neo4j.  
+Este paso devuelve una lista ordenada de artículos en los que un autor específico ha participado. La relevancia viene determinada por el número de autores qu han participado en los artículos en los que el autor específico ha participado.
 
-Teniendo en mente las consultas del apartado **4.1** y **5.1**, pensamos que lamejor solución tanto para el volumen de datos como para una mayor eficiencia, es la de utilizar una base de datos de grafos. Por ello, hemos decidido utilizar Neo4j.
+Para realizar esta tarea, se puede utilizar tanto la línea de comandoa de **Neo4j** como la interfaz web.  En nuestro caso, vamos a utilizar el cliente de Python para **Neo4j**.  
 
-Las consultas de este apartado están recogidas en el archivo [articles_queries.md](/4-simple_queries/articles_queries.md), que crean la base de datos con los ficheros creados en los apartados anteriores y realizan las consultas necesarias para obtener los artículos en los que un autor específico ha participado.
+Teniendo en mente las consultas de **"4.1 Articles"** y **"5.1 Collaborators"**, pensamos que la mejor solución tanto para el volumen de datos como para una mayor eficiencia, es la de utilizar una base de datos de grafos, ya que involucran la relación entre autores y la relevancia de su participación en los artículos. Por ello, hemos decidido utilizar **Neo4j**.
+
+El archivo [articles_queries.md](/4-simple_queries/articles_queries.md) nos proporciona los códigos necesarios para realizar la consulta en la línea de comandos de **Neo4j**, no obstante, en el archivo [articles.ipynb](/4-simple_queries/articles.ipynb) se encuentra el código necesario para realizar la consulta en el cliente de Python para **Neo4j**. Dicho archivo, se conecta al contenedor "**Neo4j**" via HTTP por el puerto 7687 del localhost. Una vez conectado, se importan los datos del archivo [csv/output.csv](/csv/output.csv) y se crea la estructura de la base de datos. Finalmente, se realiza la consulta y se muestra el resultado.
 
 ### 4.2.Texts
 
-Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un score mayor.
+Este paso devuelve un listado ordenado de párrafos, junto con el título del artículo al que pertenecen, que contienen un término específico. La relevancia viene determinada por el tamaño del párrafo y la frecuencia del término, por lo cual, cuando un término aparece la misma cantidad de veces en dos textos, el texto de menor tamaño aparece primero con un ***score*** mayor.
 
 Para realizar esta tarea, hemos utilizado el motor de búsqueda Elasticsearch por su eficiencia en cuanto al indexado. Elasticsearch utiliza índice invertido, que consiste en indexar el contenido de los documentos en palabras y números. Además muestra la localización de esas palabras o números, facilitando así la búsqueda en documentos completos.
 
-Primero, hay que conectar al contenedor "elasticsearch". Para ello, vamos a utilizar el cliente de Python para Elasicsearch, que se encuentra en el archivo [texts.ipynb](/4-simple_queries/texts.ipynb).
+Primero, hay que conectar al contenedor "**Elastic Search**". Para ello, vamos a utilizar el cliente de Python para **Elastic Search**, que se encuentra en el archivo [texts.ipynb](/4-simple_queries/texts.ipynb).
 
-El archivo `texts.ipynb` nos propociona los códigos necesarios para acceder al cluster autogestionado de Elasticsearch via HTTP por el puerto 9200 del localhost. Una vez conectado, se puede indexar datos, solo en caso de que es la primera vez que levantas el contenedor o quieres añadir nuevos datos. Sin embargo, en caso contrario no es necesario ejercutarlo. A continuación, está la query necesaria para consultar por el término clave que quieras. Al ejecutar la celda te pedirá como input una palabra clave y como resultado te devolverá un dataframe ordenado por score(relevancia)  de los párrafos y el título del artículo.
+El archivo `texts.ipynb` nos propociona los códigos necesarios para acceder al cluster autogestionado de Elasticsearch via HTTP por el puerto 9200 del localhost. Una vez conectado, se puede indexar datos, solo en caso de que es la primera vez que levantas el contenedor o quieres añadir nuevos datos. Sin embargo, en caso contrario no es necesario ejercutarlo. A continuación, está la query necesaria para consultar por el término clave que quieras. Al ejecutar la celda te pedirá como input una palabra clave y como resultado te devolverá un dataframe ordenado por ***score*** (*relevancia*) de los párrafos y el título del artículo.
 
 Por último, en el caso de que quieras eliminar un índice, también es posible con la ejecución de la última celda del ipynb.  
 
@@ -143,19 +149,21 @@ Por último, en el caso de que quieras eliminar un índice, también es posible 
 
 ## 5. Complex Queries
 
-En este apartado, disponemos de 2 ficheros:
-- [collaborators_queries.md](/5-complex_queries/collaborators_queries.md).
-- [wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb)
+En este apartado, disponemos de **4 ficheros**:
+- [collaborators_queries.md](/5-complex_queries/collaborators_queries.md): contiene la query necesaria para listar ordenadamente los colaboradores de un autor específico.
+- [collaborators.ipynb](/5-complex_queries/collaborators.ipynb): contiene el código necesario para listar ordenadamente los colaboradores de un autor específico.
+- [wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb): contiene el código necesario para listar ordenadamente el número de palabras de longitud n.
+- [wordLengthCounter.py](5-complex_queries/wordLengthCounter.py): contiene el mismo código que el anterior, pero en formato `.py`.
 
 ### 5.1.Collaborators
 
-De nuevo acudimos a neo4j para realizar estas consultas ya que al tratarse de una base de datos de grafos es más eficiente para la búqueda de coloaboradores. Ya que en este tipo de bases d edatos, las relaciones importan tanto o más que los datos en sí.
+De nuevo acudimos a **Neo4j** para realizar estas consultas ya que al tratarse de una base de datos de grafos es más eficiente para la búqueda de ***coloaboradores***. Ya que en este tipo de bases de edatos, las relaciones importan tanto o más que los datos en sí.
 
-Las consultas están recogidas en el fichero [collaborators_queries.md](/5-complex_queries/collaborators_queries.md).
+De igual forma que en el apartado anterior, el archivo [collaborators.ipynb](/5-complex_queries/collaborators.ipynb) nos proporciona los códigos necesarios para realizar la consulta en el cliente de Python para **Neo4j**. 
 
 ### 5.2.Words
 
-De nuevo utilizamos la tecnología Map Reduce en Spark para realizar esta tarea. En este caso, se utiliza para obtener el número de palabras de longitud n. El notebook[wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb) devuelve una tupla con la longitud n seleccionada y el número de palabras de esa longitud que hay en el corpus.
+De nuevo utilizamos la tecnología **Map Reduce en Spark** para realizar esta tarea. En este caso, se utiliza para obtener el número de palabras de longitud $n$. El notebook [wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb) devuelve una tupla con la longitud $n$ seleccionada y el número de palabras de esa longitud que hay en el corpus.
 
 ## 6. Docker
 
