@@ -2,12 +2,12 @@
 <h1> Infraestructura UPM para publicaciones científicas </h1>
 <h2> IBD_Grupo2-P2</h2>
 </center>
-<i><small>**Alumnos:** Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño<br>Última actualización: 2023-05-01</small></i></div>
+<i><small><b>Alumnos</b>: Noa Chu, Che Cui, Carlota Medrano, Alejandro Pequeño<br><b>Última actualización</b>: 2023-05-01</small></i></div>
 
-Este repositorio contiene los archivos necesarios para crear una infraestructura basada en Docker que soporte la gestión enriquecida de publicaciones científicas en formato PDF para el archivo digital de la Universidad Politécnica de Madrid (UPM) que actualmente gestiona los trabajos fin de grado, fin de tesis y tesis doctorales de los alumnos de la Universidad pero se pide una nueva versión de la plataforma para poder gestionar también las publicaciones científicas de sus investigadores, lo cual es un desafío porque el volumen de datos que se ha de soportar es mucho mayor que con los TFGs, TFMs, y tesis. En cuanto a la parte de la gestión enriquecida, se quieren ofrecer datos estadísticos sobre los autores de las publicaciones, sus colaboraciones, las áreas de investigación, y además facilitar la exploración de su contenido y la búsqueda avanzada desde su propio portal web.
+Este repositorio contiene los archivos necesarios para crear una infraestructura basada en Docker que soporte la gestión enriquecida de publicaciones científicas en formato PDF para el archivo digital de la Universidad Politécnica de Madrid (_UPM_) que actualmente gestiona los trabajos fin de grado, fin de tesis y tesis doctorales de los alumnos de la Universidad pero se pide una nueva versión de la plataforma para poder gestionar también las publicaciones científicas de sus investigadores, lo cual es un desafío porque el volumen de datos que se ha de soportar es mucho mayor que con los TFGs, TFMs, y tesis. En cuanto a la parte de la gestión enriquecida, se quieren ofrecer datos estadísticos sobre los autores de las publicaciones, sus colaboraciones, las áreas de investigación, y además facilitar la exploración de su contenido y la búsqueda avanzada desde su propio portal web.
 
 El siguiente repositorio está dividido en 5 apartados (*carpetas*):
-- **(1-publications)**: contiene los archivos necesarios para la conversión de los documentos PDF a `json` a partir de una lista de DOIs.
+- **1-publications**: contiene los archivos necesarios para la conversión de los documentos PDF a `json` a partir de una lista de DOIs.
 - **2-static_data**: contiene los archivos necesarios para la generación de dos archivos `csv` que contienen información estática sobre los documentos.
 - **3-dynamic_data**: contiene los archivos necesarios para la generación de un archivo `csv` que contienen el número de aparicion de un término en concreto.
 - **4-simple_queries**: contiene los archivos necesarios para realizar consultas de listado mediante **Neo4j** y **Elasticsearch**.
