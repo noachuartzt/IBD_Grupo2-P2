@@ -116,7 +116,7 @@ Para ello, hemos creado un **MapReduce**. Es un único programa guardado con dos
 
 Se ha decidido utilizar la tecnología **map reduce en spark** por los siguinetes motivos:
 
-- **Tipo de conteo**: a diferencia de otras tecnologías, *map reduce* permite realizar un conteo de palabras de forma eficiente. Además de contar palabaras duplicadas en mismo documento, contrario a lo que sucede con otras tecnologías como *Elastic Search*.
+- **Tipo de conteo**: a diferencia de otras tecnologías, *map reduce* permite realizar un conteo de palabras de forma eficiente, gracias a su procesamiento distribuido. Además de contar palabaras duplicadas en mismo documento, contrario a lo que sucede con otras tecnologías como *Elastic Search*.
 - **Escalabilidad**: Spark es una tecnología escalable, que permite procesar grandes volúmenes de datos de forma eficiente, como sucede con el caso de nuestro corpus.
 - **Facilidad de uso**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Y sin necesidad de usar java, como en el caso de *Hadoop*.
 - **Velocidad**: Spark es una tecnología que permite procesar grandes volúmenes de datos de forma eficiente. Que quizás en el caso de unos papers científicos no es tan necesaria. Pero que en el caso de un corpus de papers a nivel internacional, sí que puede ser necesario.
