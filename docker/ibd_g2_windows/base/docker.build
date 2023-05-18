@@ -1,0 +1,1 @@
+docker build -t noachuartzt/spark-base:0.0.1 .
