@@ -156,8 +156,8 @@ Por último, en el caso de que quieras eliminar un índice, también es posible 
 ## 5. Complex Queries
 
 En este apartado, disponemos de **4 ficheros**:
-- [collaborators_queries.md](/5-complex_queries/collaborators_queries.md): contiene la query necesaria para listar ordenadamente los colaboradores de un autor específico.
-- [collaborators.ipynb](/5-complex_queries/collaborators.ipynb): contiene el código necesario para listar ordenadamente los colaboradores de un autor específico.
+- [colaborators_queries.md](/5-complex_queries/colaborators_queries.md): contiene la query necesaria para listar ordenadamente los colaboradores de un autor específico.
+- [colaborators.ipynb](/5-complex_queries/colaborators.ipynb): contiene el código necesario para listar ordenadamente los colaboradores de un autor específico.
 - [wordLengthCounter.ipynb](5-complex_queries/wordLengthCounter.ipynb): contiene el código necesario para listar ordenadamente el número de palabras de longitud n.
 - [wordLengthCounter.py](5-complex_queries/wordLengthCounter.py): contiene el mismo código que el anterior, pero en formato `.py`.
 
@@ -165,7 +165,7 @@ En este apartado, disponemos de **4 ficheros**:
 
 De nuevo acudimos a **Neo4j** para realizar estas consultas ya que al tratarse de una base de datos de grafos es más eficiente para la búqueda de ***coloaboradores***. Ya que en este tipo de bases de edatos, las relaciones importan tanto o más que los datos en sí.
 
-De igual forma que en el apartado anterior, el archivo [collaborators.ipynb](/5-complex_queries/collaborators.ipynb) nos proporciona los códigos necesarios para realizar la consulta en el cliente de Python para **Neo4j**. 
+De igual forma que en el apartado anterior, el archivo [colaborators.ipynb](/5-complex_queries/colaborators.ipynb) nos proporciona los códigos necesarios para realizar la consulta en el cliente de Python para **Neo4j**. 
 
 ### 5.2.Words
 
