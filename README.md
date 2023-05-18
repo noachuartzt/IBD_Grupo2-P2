@@ -69,8 +69,8 @@ Esto se hace, pues, queremos ejecutar los archivos de la carpeta para la creaci�
 ## 1. Publications
 
 En este apartado disponemos de **2 carpetas y 3 ficheros**:
-- [json](/json): carpeta que contiene por cada DOI existente en [Semantic Web Scholar API](https://api.semanticscholar.org/), un archivo `json` con la meta-informaci처n del documento.
-- [csv](/csv): careta que contiene un archivo `csv` con la meta-informaci처n de los documentos parseada y estructurada a partir de los archivos `json`.
+- [json](1-publications/json): carpeta que contiene por cada DOI existente en [Semantic Web Scholar API](https://api.semanticscholar.org/), un archivo `json` con la meta-informaci처n del documento.
+- [csv](1-publications/csv): careta que contiene un archivo `csv` con la meta-informaci처n de los documentos parseada y estructurada a partir de los archivos `json`.
 - [corpus.txt](/corpus.txt): fichero que contiene una lista de DOIs de los documentos que se quieren parsear.
 - [parse.py](/parse.py): fichero que contiene las funciones necesarias para parsear los archivos `json` y generar el archivo `csv`.
 - [test.ipynb](/test.ipynb): fichero que contiene el c처digo necesario para ejecutar el (parse.py)[/parse.py] y generar los archivos previamente mencionados.
